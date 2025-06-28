@@ -1,0 +1,62 @@
+# SSH Configuration Template for VS Code
+# Copy this to your ~/.ssh/config file
+
+# =====================================
+# Kaggle Remote SSH Configuration
+# =====================================
+
+Host KaggleSSH
+    HostName YOUR_NGROK_HOSTNAME_HERE
+    Port YOUR_NGROK_PORT_HERE
+    User root
+    IdentityFile ~/.ssh/id_rsa
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+# Example with actual values (replace with your own):
+# Host KaggleSSH
+#     HostName 0.tcp.ap.ngrok.io
+#     Port 12345
+#     User root
+#     IdentityFile ~/.ssh/id_rsa
+#     StrictHostKeyChecking no
+#     UserKnownHostsFile /dev/null
+
+# =====================================
+# How to use:
+# =====================================
+# 1. Run the Kaggle notebook to get ngrok hostname and port
+# 2. Replace YOUR_NGROK_HOSTNAME_HERE with the actual hostname (e.g., 0.tcp.ap.ngrok.io)
+# 3. Replace YOUR_NGROK_PORT_HERE with the actual port (e.g., 12345)
+# 4. Save this file as ~/.ssh/config
+# 5. In VS Code: Ctrl+Shift+P → "Remote-SSH: Connect to Host..." → "KaggleSSH"
+
+# =====================================
+# Alternative: Multiple Kaggle Sessions
+# =====================================
+# You can add multiple configurations if you run multiple Kaggle sessions:
+
+# Host KaggleSSH1
+#     HostName 0.tcp.ap.ngrok.io
+#     Port 12345
+#     User root
+#     IdentityFile ~/.ssh/id_rsa
+#     StrictHostKeyChecking no
+#     UserKnownHostsFile /dev/null
+
+# Host KaggleSSH2
+#     HostName 2.tcp.ap.ngrok.io
+#     Port 67890
+#     User root
+#     IdentityFile ~/.ssh/id_rsa
+#     StrictHostKeyChecking no
+#     UserKnownHostsFile /dev/null
+
+# =====================================
+# Troubleshooting:
+# =====================================
+# If connection fails:
+# 1. Check if Kaggle notebook is still running
+# 2. Verify hostname and port are correct
+# 3. Ensure your SSH keys are in the right location
+# 4. Try regenerating ngrok tunnel in Kaggle notebook
