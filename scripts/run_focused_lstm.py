@@ -39,110 +39,98 @@ warnings.filterwarnings('ignore')
 # Add the src directory to the Python path
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(__file__)), 'src'))
 
+# Import individual functions from technical_indicators
+from technical_indicators import (
+    calculate_rsi, calculate_roc, calculate_stochastic, calculate_tsi,
+    calculate_obv, calculate_mfi, calculate_pvt,
+    calculate_tema, calculate_macd, calculate_kama,
+    calculate_atr, calculate_bollinger_bands, calculate_ulcer_index
+)
 from lstm_trading_strategy import LSTMTradingStrategy
 
 def load_price_data(file_path):
-    """Load and validate processed price data with technical indicators"""
-    print(f"📊 Loading processed data from: {file_path}")
+    """Load and validate price data"""
+    print(f"📊 Loading price data from: {file_path}")
     
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Data file not found: {file_path}")
     
     df = pd.read_csv(file_path)
     
-    # Check if data has an index column or date column
-    if 'Unnamed: 0' in df.columns:
-        df.set_index('Unnamed: 0', inplace=True)
-        df.index = pd.to_datetime(df.index)
-    elif 'date' in df.columns:
-        df['date'] = pd.to_datetime(df['date'])
-        df.set_index('date', inplace=True)
-    elif 'Date' in df.columns:
-        df['Date'] = pd.to_datetime(df['Date'])
-        df.set_index('Date', inplace=True)
+    # Validate required columns
+    required_columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
+    missing_columns = [col for col in required_columns if col not in df.columns]
+    if missing_columns:
+        raise ValueError(f"Missing required columns: {missing_columns}")
     
+    # Convert Date column and set as index
+    df['Date'] = pd.to_datetime(df['Date'])
+    df.set_index('Date', inplace=True)
     df.sort_index(inplace=True)
     
-    print(f"✅ Loaded {len(df)} records with {len(df.columns)} columns")
-    print(f"📅 Data range: {df.index[0].date()} to {df.index[-1].date()}")
-    print(f"📊 Available columns: {list(df.columns)[:10]}..." if len(df.columns) > 10 else f"📊 Available columns: {list(df.columns)}")
-    
+    print(f"✅ Loaded {len(df)} records from {df.index[0].date()} to {df.index[-1].date()}")
     return df
 
-def extract_focused_indicators(df):
-    """Extract only the 13 specified indicators from processed data"""
-    print("🔧 Extracting focused technical indicators...")
+def calculate_focused_indicators(df):
+    """Calculate only the 13 specified indicators"""
+    print("🔧 Calculating focused technical indicators...")
     
-    # Define the 13 focused indicators we want
-    focused_indicators = {
-        # 📈 Momentum Indicators
-        'RSI': 'RSI',
-        'ROC': 'ROC', 
-        'Stoch_K': 'Stoch_K',
-        'Stoch_D': 'Stoch_D',
-        'TSI': 'TSI',
-        
-        # 📊 Volume Indicators  
-        'OBV': 'OBV',
-        'MFI': 'MFI',
-        'PVT': 'PVT',
-        
-        # � Trend Indicators
-        'TEMA': 'TEMA',
-        'MACD': 'MACD',
-        'MACD_Signal': 'MACD_Signal',
-        'MACD_Histogram': 'MACD_Histogram',
-        'KAMA': 'KAMA',
-        
-        # 🌪️ Volatility Indicators
-        'ATR': 'ATR',
-        'BB_Upper': 'BB_Upper',
-        'BB_Middle': 'BB_Middle', 
-        'BB_Lower': 'BB_Lower',
-        'Ulcer_Index': 'Ulcer_Index'
-    }
+    high = df['High']
+    low = df['Low']
+    close = df['Close']
+    open_price = df['Open']
+    volume = df['Volume'] if 'Volume' in df.columns else pd.Series(index=df.index, dtype=float)
     
-    # Start with basic OHLCV data
-    basic_columns = ['open', 'high', 'low', 'close', 'volume']
-    result_df = pd.DataFrame(index=df.index)
+    # Create result dataframe
+    result_df = df.copy()
     
-    # Copy basic OHLCV data (handle different column name cases)
-    for col in basic_columns:
-        found = False
-        for df_col in df.columns:
-            if df_col.lower() == col:
-                result_df[col.title()] = df[df_col]
-                found = True
-                break
-        if not found:
-            print(f"⚠️ Warning: {col} column not found in data")
+    # 📈 Momentum Indicators
+    print("  📈 Momentum indicators...")
+    result_df['RSI'] = calculate_rsi(close)
+    result_df['ROC'] = calculate_roc(close)
     
-    # Extract focused indicators
-    extracted_count = 0
-    missing_indicators = []
+    # Stochastic Oscillator
+    stoch_k, stoch_d = calculate_stochastic(high, low, close)
+    result_df['Stoch_K'] = stoch_k
+    result_df['Stoch_D'] = stoch_d
     
-    for indicator_name, column_name in focused_indicators.items():
-        if column_name in df.columns:
-            result_df[indicator_name] = df[column_name]
-            extracted_count += 1
-        else:
-            missing_indicators.append(column_name)
-            print(f"⚠️ Warning: {column_name} not found in processed data")
+    result_df['TSI'] = calculate_tsi(close)
     
-    # Add computed Bollinger Band indicators if we have the components
-    if 'BB_Upper' in result_df.columns and 'BB_Lower' in result_df.columns and 'Close' in result_df.columns:
-        result_df['BB_Width'] = result_df['BB_Upper'] - result_df['BB_Lower']
-        result_df['BB_Position'] = ((result_df['Close'] - result_df['BB_Lower']) / 
-                                   (result_df['BB_Upper'] - result_df['BB_Lower']))
-        extracted_count += 2
+    # 📊 Volume Indicators
+    print("  📊 Volume indicators...")
+    result_df['OBV'] = calculate_obv(close, volume)
+    result_df['MFI'] = calculate_mfi(high, low, close, volume)
+    result_df['PVT'] = calculate_pvt(close, volume)
     
-    print(f"✅ Extracted {extracted_count} focused indicators")
-    if missing_indicators:
-        print(f"⚠️ Missing indicators: {missing_indicators}")
+    # 📉 Trend Indicators
+    print("  📉 Trend indicators...")
+    result_df['TEMA'] = calculate_tema(close)
     
-    # Count final indicator columns (excluding OHLCV)
+    # MACD
+    macd_line, signal_line, histogram = calculate_macd(close)
+    result_df['MACD'] = macd_line
+    result_df['MACD_Signal'] = signal_line
+    result_df['MACD_Histogram'] = histogram
+    
+    result_df['KAMA'] = calculate_kama(close)
+    
+    # 🌪️ Volatility Indicators
+    print("  🌪️ Volatility indicators...")
+    result_df['ATR'] = calculate_atr(high, low, close)
+    
+    # Bollinger Bands
+    bb_upper, bb_middle, bb_lower = calculate_bollinger_bands(close)
+    result_df['BB_Upper'] = bb_upper
+    result_df['BB_Middle'] = bb_middle
+    result_df['BB_Lower'] = bb_lower
+    result_df['BB_Width'] = bb_upper - bb_lower
+    result_df['BB_Position'] = (close - bb_lower) / (bb_upper - bb_lower)
+    
+    result_df['Ulcer_Index'] = calculate_ulcer_index(close)
+    
+    # Count the actual indicators calculated
     indicator_columns = [col for col in result_df.columns if col not in ['Open', 'High', 'Low', 'Close', 'Volume']]
-    print(f"📊 Final dataset has {len(indicator_columns)} technical indicators")
+    print(f"✅ Calculated {len(indicator_columns)} technical indicators")
     
     return result_df
 
@@ -156,7 +144,7 @@ def run_focused_lstm_strategy():
     
     # Setup paths
     base_dir = os.path.dirname(os.path.dirname(__file__))
-    data_file = os.path.join(base_dir, 'data', 'processed', 'stock_data_with_technical_indicators.csv')
+    data_file = os.path.join(base_dir, 'data', 'raw', 'priceData5Year.csv')
     output_dir = os.path.join(base_dir, 'output')
     
     # Create output directory
@@ -166,8 +154,8 @@ def run_focused_lstm_strategy():
         # Load price data
         df = load_price_data(data_file)
         
-        # Extract focused indicators
-        df_with_indicators = extract_focused_indicators(df)
+        # Calculate focused indicators
+        df_with_indicators = calculate_focused_indicators(df)
         
         # Initialize LSTM strategy with focused settings
         print("\n🤖 Initializing LSTM Trading Strategy...")
@@ -181,11 +169,10 @@ def run_focused_lstm_strategy():
         
         # Prepare data with minimal preprocessing
         print("📋 Preparing data for LSTM...")
-        X_train, X_test, y_train, y_test = strategy.prepare_data(df_with_indicators)
+        X, y, feature_columns, dates = strategy.prepare_data(df_with_indicators)
         
-        print(f"✅ Prepared data shapes:")
-        print(f"   Training: X={X_train.shape}, y={y_train.shape}")
-        print(f"   Testing: X={X_test.shape}, y={y_test.shape}")
+        print(f"✅ Prepared data shape: X={X.shape}, y={y.shape}")
+        print(f"📊 Using {len(feature_columns)} features")
         
         # Build and train model
         print("\n🏗️ Building LSTM model...")
@@ -196,7 +183,7 @@ def run_focused_lstm_strategy():
         )
         
         print("🎓 Training LSTM model...")
-        history = strategy.train_model(epochs=50, batch_size=32, validation_split=0.2)
+        history = strategy.train_model(X, y, epochs=50, batch_size=32, validation_split=0.2)
         
         # Generate predictions and signals
         print("\n📈 Generating trading signals...")
