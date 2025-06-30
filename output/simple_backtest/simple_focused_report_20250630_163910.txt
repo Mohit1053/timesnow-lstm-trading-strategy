@@ -1,0 +1,13 @@
+SIMPLE FOCUSED LSTM BACKTEST REPORT
+==================================================
+
+Generated: 2025-06-30 16:39:10
+
+PERFORMANCE RESULTS:
+--------------------
+Initial Capital: $100.00
+Final Value: $872.04
+Total Return: 772.04%
+Buy & Hold Return: -11.12%
+Excess Return: 783.16%
+Total Trades: 315

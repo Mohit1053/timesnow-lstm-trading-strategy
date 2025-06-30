@@ -1,0 +1,38 @@
+FOCUSED LSTM STRATEGY BACKTESTING REPORT
+============================================================
+
+Generated: 2025-06-30 16:27:47
+Number of Folds: 80
+
+STRATEGY CONFIGURATION:
+------------------------------
+📈 Focused Indicators: RSI, ROC, Stochastic, TSI, OBV, MFI, PVT, TEMA, MACD, KAMA, ATR, BB, Ulcer
+🤖 Model: LSTM [100, 50] units, 0.2 dropout
+📊 Sequence Length: 60 days
+🎯 Target Horizon: 5 days
+💰 Initial Capital: $100.00
+📊 Commission: 0.100%
+⚡ Slippage: 0.050%
+
+PERFORMANCE METRICS:
+----------------------------------------
+Average Total Return: 1.55%
+Standard Deviation: 17.24%
+Average Annual Return: 0.00%
+Average Sharpe Ratio: 0.000
+Average Max Drawdown: 0.00%
+Average Excess Return: -13.92%
+
+CONSISTENCY METRICS:
+-------------------------
+Positive Periods: 12/80
+Consistency Ratio: 15.00%
+Best Period: 90.32%
+Worst Period: -47.13%
+
+STATISTICAL SIGNIFICANCE:
+------------------------------
+T-Statistic: -2.398
+P-Value: 0.0189
+Significant (p < 0.05): Yes
+

@@ -57,11 +57,39 @@ def load_price_data(file_path):
     
     df = pd.read_csv(file_path)
     
-    # Validate required columns
-    required_columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
-    missing_columns = [col for col in required_columns if col not in df.columns]
-    if missing_columns:
-        raise ValueError(f"Missing required columns: {missing_columns}")
+    # Check if this is the multi-company dataset format
+    if 'PriceDate' in df.columns and 'companyid' in df.columns:
+        print(f"📊 Detected multi-company dataset with {df['companyid'].nunique()} companies")
+        
+        # Select the company with the most data
+        company_counts = df['companyid'].value_counts()
+        selected_company = company_counts.index[0]
+        company_data_count = company_counts.iloc[0]
+        
+        print(f"🎯 Selected company {selected_company} with {company_data_count} records")
+        df = df[df['companyid'] == selected_company].copy()
+        
+        # Rename columns to standard format
+        column_mapping = {
+            'PriceDate': 'Date',
+            'OpenPrice': 'Open',
+            'AdjustedHighPrice': 'High',
+            'AdjustedLowPrice': 'Low',
+            'AdjustedClosePrice': 'Close',
+            'TradedQuantity': 'Volume'
+        }
+        df = df.rename(columns=column_mapping)
+        
+        # Keep only required columns
+        required_columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
+        df = df[required_columns]
+        
+    else:
+        # Original format validation
+        required_columns = ['Date', 'Open', 'High', 'Low', 'Close', 'Volume']
+        missing_columns = [col for col in required_columns if col not in df.columns]
+        if missing_columns:
+            raise ValueError(f"Missing required columns: {missing_columns}")
     
     # Convert Date column and set as index
     df['Date'] = pd.to_datetime(df['Date'])
@@ -183,15 +211,28 @@ def run_focused_lstm_strategy():
         )
         
         print("🎓 Training LSTM model...")
-        history = strategy.train_model(X, y, epochs=50, batch_size=32, validation_split=0.2)
+        history = strategy.train_model(epochs=50, batch_size=32, validation_split=0.2)
+        
+        # Make predictions (required before generating signals)
+        print("\n🔮 Making predictions...")
+        strategy.make_predictions()
         
         # Generate predictions and signals
         print("\n📈 Generating trading signals...")
         signals_df = strategy.generate_trading_signals(df_with_indicators)
         
-        # Evaluate strategy
+        # Evaluate strategy performance
         print("\n📊 Evaluating strategy performance...")
-        evaluation_results = strategy.evaluate_strategy(df_with_indicators, signals_df)
+        model_metrics = strategy.evaluate_model_performance()
+        portfolio_metrics = strategy.calculate_portfolio_performance(initial_capital=100, position_size=0.1, max_positions=3)
+        summary_stats = strategy.calculate_summary_statistics()
+        
+        # Combine evaluation results
+        evaluation_results = {
+            'model_metrics': model_metrics,
+            'portfolio_performance': portfolio_metrics,
+            'summary_statistics': summary_stats
+        }
         
         # Save results
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -203,7 +244,7 @@ def run_focused_lstm_strategy():
         
         # Save evaluation report
         report_file = os.path.join(output_dir, f'focused_lstm_report_{timestamp}.txt')
-        with open(report_file, 'w') as f:
+        with open(report_file, 'w', encoding='utf-8') as f:
             f.write("FOCUSED LSTM TRADING STRATEGY REPORT\n")
             f.write("=" * 50 + "\n\n")
             f.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")

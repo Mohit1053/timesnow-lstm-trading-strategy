@@ -101,7 +101,7 @@ def run_balanced_lstm_strategy():
     # Calculate portfolio performance (new enhancement)
     print("\n💰 Step 7: Calculating portfolio performance...")
     portfolio_metrics = strategy.calculate_portfolio_performance(
-        initial_capital=100000,   # $100k starting capital
+        initial_capital=100,   # $100 starting capital
         position_size=0.10,       # Conservative 10% per trade
         max_positions=3           # Max 3 concurrent positions
     )

@@ -1010,6 +1010,20 @@ class LSTMTradingStrategy:
         
         for idx, signal in df.iterrows():
             current_date = signal['Date']
+            # Handle synthetic dates (Day_0, Day_1, etc.) and real dates
+            if isinstance(current_date, str):
+                if current_date.startswith('Day_'):
+                    # Extract day number from synthetic date
+                    day_num = int(current_date.split('_')[1])
+                    # Create a datetime using a base date plus the day number
+                    current_date = pd.to_datetime('2023-01-01') + pd.Timedelta(days=day_num)
+                else:
+                    try:
+                        current_date = pd.to_datetime(current_date)
+                    except:
+                        # If parsing fails, create synthetic datetime
+                        current_date = pd.to_datetime('2023-01-01') + pd.Timedelta(days=idx)
+            
             signal_type = signal['Signal_Type']
             confidence = signal['Confidence_Score']
             expected_return = signal['Actual_Gain_Loss_Pct'] / 100

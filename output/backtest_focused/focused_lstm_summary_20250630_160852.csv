@@ -1,0 +1,2 @@
+num_folds,avg_total_return,std_total_return,avg_annual_return,avg_sharpe_ratio,avg_max_drawdown,avg_excess_return,positive_periods,consistency_ratio,best_period,worst_period,statistical_significance
+80,0.015456440718125006,0.17238216606929102,0.0,0.0,0.0,-0.13915365458818213,12,0.15,0.9032231745000001,-0.4713279424999999,"{'t_statistic': -2.397751479805758, 'p_value': 0.018855880360436682, 'is_significant': True}"
