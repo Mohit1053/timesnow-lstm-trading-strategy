@@ -1,0 +1,24 @@
+ADAPTIVE LSTM TRADING STRATEGY REPORT
+==================================================
+
+Generated: 2025-06-30 19:03:03
+
+STRATEGY PARAMETERS:
+--------------------
+Stop Loss Threshold: -2.0%
+Momentum Days Required: 2
+Minimum Gain Threshold: 1.0%
+Initial Capital: $100
+
+PERFORMANCE RESULTS:
+--------------------
+Final Value: $98.72
+Total Return: -1.28%
+Buy & Hold Return: -52.65%
+Excess Return: 51.37%
+Total Trades: 100
+Win Rate: 23.00%
+Average Profit: 87.41%
+Average Loss: -13.47%
+Maximum Loss: -53.64%
+Maximum Gain: 118.21%

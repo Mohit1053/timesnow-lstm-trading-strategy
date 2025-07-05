@@ -1,0 +1,17 @@
+FIXED SMART ADAPTIVE LSTM BACKTESTING REPORT
+======================================================================
+
+Generated: 2025-06-30 20:26:06
+
+STRATEGY FEATURES:
+--------------------
+• Fixed data alignment and signal generation
+• Minimal interference approach
+• Emergency stop loss only (10%)
+• Proven 95% capital allocation
+• Multi-company support
+
+COMPANY PERFORMANCE:
+-------------------------
+Company | Folds | Avg Return | Best Return | Win Rate
+-------------------------------------------------------
