@@ -1,0 +1,19 @@
+=== IMPROVED SIGNALS ANALYSIS SUMMARY ===
+Analysis Date: 2025-07-06 12:25:11
+
+Total Signals: 678
+Overall Accuracy: 63.57%
+Opposite Predictions: 247 (36.4%)
+Improvement from original 42.3%: 5.9 percentage points
+
+COMPANY PERFORMANCE:
+GOOGL: 58.0% accuracy, 42.0% opposite predictions
+MSFT: 64.8% accuracy, 35.2% opposite predictions
+AAPL: 65.7% accuracy, 34.3% opposite predictions
+AMZN: 65.9% accuracy, 34.1% opposite predictions
+
+Best Month: 2 (76.0%)
+Worst Month: 12 (58.6%)
+
+Key Achievement: Reduced opposite predictions by 5.9 percentage points
+Current opposite rate: 36.4% (target: <30%)

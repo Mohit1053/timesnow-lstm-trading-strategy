@@ -1,0 +1,11 @@
+ROLLING WINDOW LSTM TRADING STRATEGY SUMMARY
+==================================================
+
+Overall Accuracy: 57.74%
+Bullish Signal Accuracy: 58.28%
+Bearish Signal Accuracy: 57.26%
+Total Signals: 3590
+Correct Predictions: 2073
+Opposite Predictions: 1517
+Prediction Horizon: 5 days
+Sequence Length: 60 days

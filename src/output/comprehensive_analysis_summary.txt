@@ -1,0 +1,19 @@
+=== COMPREHENSIVE ANALYSIS SUMMARY ===
+
+Analysis Date: 2025-07-06 12:24:34
+Total Signals: 678
+Overall Accuracy: 63.57%
+Opposite Predictions: 247 (36.4%)
+Improvement from original 42.3%: 5.9 percentage points
+
+COMPANY PERFORMANCE:
+GOOGL: 58.0% accuracy (174 signals)
+MSFT: 64.8% accuracy (162 signals)
+AAPL: 65.7% accuracy (169 signals)
+AMZN: 65.9% accuracy (173 signals)
+
+Best Month: 2 (76.0%)
+Worst Month: 12 (58.6%)
+
+Average Signal Strength: 0.2671
+Average Signal Probability: 0.4692

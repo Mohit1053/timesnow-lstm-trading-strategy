@@ -1,0 +1,583 @@
+d "c:\Users\98765\OneDrive\Desktop\Timesnow\src" && python -c "
+>> import pandas as pd
+>> import numpy as np
+>> 
+>> # Load the signals data
+>> df = pd.read_csv('output/rolling_window_signals_20250706_114025.csv')
+>> 
+>> print(' COMPREHENSIVE ANALYSIS OF ROLLING WINDOW LSTM SIGNALS')
+>> print('='*60)
+>> 
+>> # Basic statistics
+>> print(f' DATASET OVERVIEW:')
+>> print(f'   Total signals: {len(df):,}')
+>> print(f'   Date range: {df[\"Date\"].min()} to {df[\"Date\"].max()}')
+>> print(f'   Companies: {df[\"Company\"].nunique()} ({list(df[\"Company\"].unique())})')   
+>> print()
+>>
+>> # Signal distribution
+>> print(f' SIGNAL DISTRIBUTION:')
+>> signal_counts = df['Signal_Direction'].value_counts()
+>> print(f'   Bullish signals: {signal_counts.get(\"Bullish\", 0):,} ({signal_counts.get(\"Bullish\", 0)/len(df)*100:.1f}%)')
+>> print(f'   Bearish signals: {signal_counts.get(\"Bearish\", 0):,} ({signal_counts.get(\"Bearish\", 0)/len(df)*100:.1f}%)')
+>> print()
+>>
+>> # Accuracy analysis
+>> print(f' ACCURACY ANALYSIS:')
+>> overall_accuracy = df['Correct_Prediction'].mean()
+>> print(f'   Overall accuracy: {overall_accuracy:.2%}')
+>>
+>> # Accuracy by signal type
+>> bullish_acc = df[df['Signal_Direction'] == 'Bullish']['Correct_Prediction'].mean()
+>> bearish_acc = df[df['Signal_Direction'] == 'Bearish']['Correct_Prediction'].mean()
+>> print(f'   Bullish accuracy: {bullish_acc:.2%}')
+>> print(f'   Bearish accuracy: {bearish_acc:.2%}')
+>> print()
+>>
+>> # Company-wise performance
+>> print(f' COMPANY-WISE PERFORMANCE:')
+>> company_stats = df.groupby('Company').agg({
+>>     'Correct_Prediction': ['mean', 'count'],
+>>     'Signal_Strength': 'mean'
+>> }).round(3)
+>> company_stats.columns = ['Accuracy', 'Total_Signals', 'Avg_Signal_Strength']
+>> print(company_stats)
+>> print()
+>>
+>> # Signal strength analysis
+>> print(f' SIGNAL STRENGTH ANALYSIS:')
+>> print(f'   Average signal strength: {df[\"Signal_Strength\"].mean():.3f}')
+>> print(f'   Signal strength std: {df[\"Signal_Strength\"].std():.3f}')
+>> print(f'   Strong signals (>0.5): {(df[\"Signal_Strength\"] > 0.5).sum():,} ({(df[\"Signal_Strength\"] > 0.5).mean()*100:.1f}%)')
+>> print(f'   Weak signals (<0.2): {(df[\"Signal_Strength\"] < 0.2).sum():,} ({(df[\"Signal_Strength\"] < 0.2).mean()*100:.1f}%)')
+>> print()
+>>
+>> # Warning analysis
+>> print(f' WARNING ANALYSIS:')
+>> opposite_predictions = (df['Warning'] == 'OPPOSITE_PREDICTION').sum()
+>> print(f'   Opposite predictions: {opposite_predictions:,} ({opposite_predictions/len(df)*100:.1f}%)')
+>> print(f'   Correct predictions: {(df[\"Warning\"] == \"CORRECT_PREDICTION\").sum():,}')
+>> print()
+>>
+>> # Monthly performance
+>> print(f' MONTHLY PERFORMANCE:')
+>> df['Date'] = pd.to_datetime(df['Date'])
+>> df['Month'] = df['Date'].dt.to_period('M')
+>> monthly_acc = df.groupby('Month')['Correct_Prediction'].agg(['mean', 'count']).round(3)  
+>> monthly_acc.columns = ['Accuracy', 'Signals']
+>> print(monthly_acc.head(10))
+>> print()
+>>
+>> # Best and worst performing periods
+>> print(f' BEST PERFORMING MONTHS:')
+>> best_months = monthly_acc.nlargest(5, 'Accuracy')
+>> print(best_months)
+>> print()
+>>
+>> print(f' WORST PERFORMING MONTHS:')
+>> worst_months = monthly_acc.nsmallest(5, 'Accuracy')
+>> print(worst_months)
+>> "
+At line:1 char:51
++ cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src" && python -c "
++                                                   ~~
+The token '&&' is not a valid statement separator in this version.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException       
+    + FullyQualifiedErrorId : InvalidEndOfLine
+
+PS C:\Users\98765\OneDrive\Desktop\Timesnow> cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src"; python -c "
+>> import pandas as pd
+>> import numpy as np
+>>
+>> # Load the signals data
+>> df = pd.read_csv('output/rolling_window_signals_20250706_114025.csv')
+>>
+>> print(' COMPREHENSIVE ANALYSIS OF ROLLING WINDOW LSTM SIGNALS')
+>> print('='*60)
+>>
+>> # Basic statistics
+>> print(f' DATASET OVERVIEW:')
+>> print(f'   Total signals: {len(df):,}')
+>> print(f'   Date range: {df[\"Date\"].min()} to {df[\"Date\"].max()}')
+>> print(f'   Companies: {df[\"Company\"].nunique()} ({list(df[\"Company\"].unique())})')
+>> print()
+>>
+>> # Signal distribution
+>> print(f' SIGNAL DISTRIBUTION:')
+>> signal_counts = df['Signal_Direction'].value_counts()
+>> print(f'   Bullish signals: {signal_counts.get(\"Bullish\", 0):,} ({signal_counts.get(\"Bullish\", 0)/len(df)*100:.1f}%)')
+>> print(f'   Bearish signals: {signal_counts.get(\"Bearish\", 0):,} ({signal_counts.get(\"Bearish\", 0)/len(df)*100:.1f}%)')
+>> print()
+>>
+>> # Accuracy analysis
+>> print(f' ACCURACY ANALYSIS:')
+>> overall_accuracy = df['Correct_Prediction'].mean()
+>> print(f'   Overall accuracy: {overall_accuracy:.2%}')
+>>
+>> # Accuracy by signal type
+>> bullish_acc = df[df['Signal_Direction'] == 'Bullish']['Correct_Prediction'].mean()
+>> bearish_acc = df[df['Signal_Direction'] == 'Bearish']['Correct_Prediction'].mean()
+>> print(f'   Bullish accuracy: {bullish_acc:.2%}')
+>> print(f'   Bearish accuracy: {bearish_acc:.2%}')
+>> print()
+>>
+>> # Company-wise performance
+>> print(f' COMPANY-WISE PERFORMANCE:')
+>> company_stats = df.groupby('Company').agg({
+>>     'Correct_Prediction': ['mean', 'count'],
+>>     'Signal_Strength': 'mean'
+>> }).round(3)
+>> company_stats.columns = ['Accuracy', 'Total_Signals', 'Avg_Signal_Strength']
+>> print(company_stats)
+>> print()
+>>
+>> # Signal strength analysis
+>> print(f' SIGNAL STRENGTH ANALYSIS:')
+>> print(f'   Average signal strength: {df[\"Signal_Strength\"].mean():.3f}')
+>> print(f'   Signal strength std: {df[\"Signal_Strength\"].std():.3f}')
+>> print(f'   Strong signals (>0.5): {(df[\"Signal_Strength\"] > 0.5).sum():,} ({(df[\"Signal_Strength\"] > 0.5).mean()*100:.1f}%)')
+>> print(f'   Weak signals (<0.2): {(df[\"Signal_Strength\"] < 0.2).sum():,} ({(df[\"Signal_Strength\"] < 0.2).mean()*100:.1f}%)')
+>> print()
+>>
+>> # Warning analysis
+>> print(f' WARNING ANALYSIS:')
+>> opposite_predictions = (df['Warning'] == 'OPPOSITE_PREDICTION').sum()
+>> print(f'   Opposite predictions: {opposite_predictions:,} ({opposite_predictions/len(df)*100:.1f}%)')
+>> print(f'   Correct predictions: {(df[\"Warning\"] == \"CORRECT_PREDICTION\").sum():,}')
+>> print()
+>> "
+  File "<string>", line 14
+    print(f'   Date range: {df[" Date\].min()}
+                               ^
+SyntaxError: unterminated string literal (detected at line 14)
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src> cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src"; python analyze_signals.py
+🔍 COMPREHENSIVE ANALYSIS OF ROLLING WINDOW LSTM SIGNALS
+============================================================
+📊 DATASET OVERVIEW:
+   Total signals: 3,590
+   Date range: 2022-01-13 to 2023-12-31
+   Companies: 5 (['GOOGL', 'MSFT', 'AAPL', 'TSLA', 'AMZN'])
+
+📈 SIGNAL DISTRIBUTION:
+   Bullish signals: 1,690 (47.1%)
+   Bearish signals: 1,900 (52.9%)
+
+🎯 ACCURACY ANALYSIS:
+   Overall accuracy: 57.74%
+   Bullish accuracy: 58.28%
+   Bearish accuracy: 57.26%
+
+🏢 COMPANY-WISE PERFORMANCE:
+         Accuracy  Total_Signals  Avg_Signal_Strength
+Company
+AAPL        0.584            718                0.144
+AMZN        0.611            718                0.143
+GOOGL       0.560            718                0.146
+MSFT        0.571            718                0.143
+TSLA        0.561            718                0.143
+
+💪 SIGNAL STRENGTH ANALYSIS:
+   Average signal strength: 0.144
+   Signal strength std: 0.094
+   Strong signals (>0.5): 0 (0.0%)
+   Weak signals (<0.2): 2,595 (72.3%)
+
+⚠️ WARNING ANALYSIS:
+   Opposite predictions: 1,517 (42.3%)
+   Correct predictions: 2,073
+
+📅 MONTHLY PERFORMANCE:
+         Accuracy  Signals
+Month
+2022-01     0.600       95
+2022-02     0.514      140
+2022-03     0.529      155
+2022-04     0.567      150
+2022-05     0.516      155
+2022-06     0.613      150
+2022-07     0.613      155
+2022-08     0.600      155
+2022-09     0.540      150
+2022-10     0.587      155
+
+🏆 BEST PERFORMING MONTHS:
+         Accuracy  Signals
+Month
+2023-08     0.632      155
+2023-03     0.619      155
+2022-06     0.613      150
+2022-07     0.613      155
+2023-04     0.613      150
+
+📉 WORST PERFORMING MONTHS:
+         Accuracy  Signals
+Month
+2022-02     0.514      140
+2022-05     0.516      155
+2023-06     0.527      150
+2022-03     0.529      155
+2022-09     0.540      150
+
+📊 SIGNAL STRENGTH vs ACCURACY:
+   Strong signals accuracy: nan%
+   Weak signals accuracy: 55.65%
+
+📈 TIME SERIES TRENDS:
+Year-wise performance:
+      Accuracy  Signals
+Year
+2022     0.571     1765
+2023     0.584     1825
+
+🔄 CONSECUTIVE PERFORMANCE ANALYSIS:
+   Longest winning streak: 14
+   Average streak length: 1.9
+
+📝 EXECUTIVE SUMMARY:
+   • Model achieved 57.7% overall accuracy on 5-day predictions
+   • Balanced performance: Bullish (58.3%) vs Bearish (57.3%)
+   • Generated 3,590 signals across 5 companies
+   • 1,517 opposite predictions require attention
+   • Signal strength averages 0.14 with 0.0% strong signals
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src> python "c:\Users\98765\OneDrive\Desktop\Timesnow\src\analyze_signals.py"
+🔍 COMPREHENSIVE ANALYSIS OF ROLLING WINDOW LSTM SIGNALS
+============================================================
+📊 DATASET OVERVIEW:
+   Total signals: 3,590
+   Date range: 2022-01-13 to 2023-12-31
+   Companies: 5 (['GOOGL', 'MSFT', 'AAPL', 'TSLA', 'AMZN'])
+
+📈 SIGNAL DISTRIBUTION:
+   Bullish signals: 1,690 (47.1%)
+   Bearish signals: 1,900 (52.9%)
+
+🎯 ACCURACY ANALYSIS:
+   Overall accuracy: 57.74%
+   Bullish accuracy: 58.28%
+   Bearish accuracy: 57.26%
+
+🏢 COMPANY-WISE PERFORMANCE:
+         Accuracy  Total_Signals  Avg_Signal_Strength
+Company
+AAPL        0.584            718                0.144
+AMZN        0.611            718                0.143
+GOOGL       0.560            718                0.146
+MSFT        0.571            718                0.143
+TSLA        0.561            718                0.143
+
+💪 SIGNAL STRENGTH ANALYSIS:
+   Average signal strength: 0.144
+   Signal strength std: 0.094
+   Strong signals (>0.5): 0 (0.0%)
+   Weak signals (<0.2): 2,595 (72.3%)
+
+⚠️ WARNING ANALYSIS:
+   Opposite predictions: 1,517 (42.3%)
+   Correct predictions: 2,073
+
+📅 MONTHLY PERFORMANCE:
+         Accuracy  Signals
+Month
+2022-01     0.600       95
+2022-02     0.514      140
+2022-03     0.529      155
+2022-04     0.567      150
+2022-05     0.516      155
+2022-06     0.613      150
+2022-07     0.613      155
+2022-08     0.600      155
+2022-09     0.540      150
+2022-10     0.587      155
+
+🏆 BEST PERFORMING MONTHS:
+         Accuracy  Signals
+Month
+2023-08     0.632      155
+2023-03     0.619      155
+2022-06     0.613      150
+2022-07     0.613      155
+2023-04     0.613      150
+
+📉 WORST PERFORMING MONTHS:
+         Accuracy  Signals
+Month
+2022-02     0.514      140
+2022-05     0.516      155
+2023-06     0.527      150
+2022-03     0.529      155
+2022-09     0.540      150
+
+📊 SIGNAL STRENGTH vs ACCURACY:
+   Strong signals accuracy: nan%
+   Weak signals accuracy: 55.65%
+
+📈 TIME SERIES TRENDS:
+Year-wise performance:
+      Accuracy  Signals
+Year
+2022     0.571     1765
+2023     0.584     1825
+
+🔄 CONSECUTIVE PERFORMANCE ANALYSIS:
+   Longest winning streak: 14
+   Average streak length: 1.9
+
+📝 EXECUTIVE SUMMARY:
+   • Model achieved 57.7% overall accuracy on 5-day predictions
+   • Balanced performance: Bullish (58.3%) vs Bearish (57.3%)
+   • Generated 3,590 signals across 5 companies
+   • 1,517 opposite predictions require attention
+   • Signal strength averages 0.14 with 0.0% strong signals
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src> powershell -Command "
+>> $csv = Import-Csv 'c:\Users\98765\OneDrive\Desktop\Timesnow\src\output\rolling_window_signals_20250706_114025.csv'
+>> Write-Host ' ROLLING WINDOW LSTM SIGNALS ANALYSIS' -ForegroundColor Green
+>> Write-Host '='*50 -ForegroundColor Green
+>> Write-Host
+>> Write-Host ' BASIC STATISTICS:' -ForegroundColor Cyan
+>> Write-Host '   Total Signals:' $csv.Count
+>> Write-Host '   Date Range:' $csv[0].Date 'to' $csv[-1].Date
+>> Write-Host '   Companies:' ($csv.Company | Sort-Object -Unique) -join ', '
+>> Write-Host
+>> Write-Host ' SIGNAL DISTRIBUTION:' -ForegroundColor Cyan
+>> $bullish = ($csv | Where-Object {$_.Signal_Direction -eq 'Bullish'}).Count
+>> $bearish = ($csv | Where-Object {$_.Signal_Direction -eq 'Bearish'}).Count
+>> Write-Host '   Bullish signals:' $bullish '('([math]::Round($bullish/$csv.Count*100,1))'%)'
+>> Write-Host '   Bearish signals:' $bearish '('([math]::Round($bearish/$csv.Count*100,1))'%)'
+>> Write-Host
+>> Write-Host ' ACCURACY ANALYSIS:' -ForegroundColor Cyan
+>> $correct = ($csv | Where-Object {$_.Correct_Prediction -eq '1'}).Count
+>> $accuracy = [math]::Round($correct/$csv.Count*100,2)
+>> Write-Host '   Overall Accuracy:' $accuracy'%'
+>> Write-Host '   Correct Predictions:' $correct
+>> Write-Host '   Opposite Predictions:' ($csv.Count - $correct)
+>> Write-Host
+>> Write-Host ' WARNING ANALYSIS:' -ForegroundColor Yellow
+>> $warnings = ($csv | Where-Object {$_.Warning -eq 'OPPOSITE_PREDICTION'}).Count
+>> Write-Host '   Opposite Predictions:' $warnings '('([math]::Round($warnings/$csv.Count*100,1))'%)'
+>> Write-Host
+>> Write-Host ' COMPANY PERFORMANCE:' -ForegroundColor Cyan
+>> $companies = $csv.Company | Sort-Object -Unique
+>> foreach ($company in $companies) {
+>>     $companyData = $csv | Where-Object {$_.Company -eq $company}
+>>     $companyCorrect = ($companyData | Where-Object {$_.Correct_Prediction -eq '1'}).Count
+>>     $companyAcc = [math]::Round($companyCorrect/$companyData.Count*100,1)
+>>     Write-Host '  ' $company':' $companyAcc'% ('$companyCorrect'/'$companyData.Count')'  
+>> }
+>> "
+At line:12 char:6
++  = ( | Where-Object {.Signal_Direction -eq 'Bullish'}).Count
++      ~
+An empty pipe element is not allowed.
+At line:13 char:6
++  = ( | Where-Object {.Signal_Direction -eq 'Bearish'}).Count
++      ~
+An empty pipe element is not allowed.
+At line:14 char:53
++ Write-Host '   Bullish signals:'  '('([math]::Round(/.Count*100,1))'% ...
++                                                     ~
+Missing ')' in method call.
+At line:14 char:54
++ Write-Host '   Bullish signals:'  '('([math]::Round(/.Count*100,1))'% ...
++                                                      ~
+You must provide a value expression following the '/' operator.
+At line:14 char:54
++ ... ite-Host '   Bullish signals:'  '('([math]::Round(/.Count*100,1))'%)'
++                                                        ~~~~~~~~~~
+Unexpected token '.Count*100' in expression or statement.
+At line:14 char:54
++ Write-Host '   Bullish signals:'  '('([math]::Round(/.Count*100,1))'% ...
++                                                      ~
+Missing closing ')' in expression.
+At line:14 char:66
++ ... ite-Host '   Bullish signals:'  '('([math]::Round(/.Count*100,1))'%)'
++                                                                    ~
+Unexpected token ')' in expression or statement.
+At line:14 char:67
++ ... ite-Host '   Bullish signals:'  '('([math]::Round(/.Count*100,1))'%)'
++                                                                     ~
+Unexpected token ')' in expression or statement.
+At line:15 char:53
++ Write-Host '   Bearish signals:'  '('([math]::Round(/.Count*100,1))'% ...
++                                                     ~
+Missing ')' in method call.
+At line:15 char:54
++ Write-Host '   Bearish signals:'  '('([math]::Round(/.Count*100,1))'% ...
++                                                      ~
+You must provide a value expression following the '/' operator.
+Not all parse errors were reported.  Correct the reported errors and try again.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : EmptyPipeElement
+
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src> cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src" && python simple_analysis.py
+At line:1 char:51
++ cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src" && python simple_an ...
++                                                   ~~
+The token '&&' is not a valid statement separator in this version.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException       
+    + FullyQualifiedErrorId : InvalidEndOfLine
+
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src> python simple_analysis.py
+============================================================
+🔍 ROLLING WINDOW LSTM SIGNALS ANALYSIS
+============================================================
+
+📊 DATASET OVERVIEW:
+   Total signals: 3,590
+   Date range: 2022-01-13 to 2023-12-31
+   Companies: 5 - ['GOOGL', 'MSFT', 'AAPL', 'TSLA', 'AMZN']
+   Features: ['Date', 'Company', 'Close_Price', 'Actual_Target', 'Predicted_Signal', 'Signal_Probability', 'Signal_Strength', 'Correct_Prediction', 'Signal_Direction', 'Actual_Direction', 'Warning']
+
+📈 SIGNAL DISTRIBUTION:
+   Bearish: 1,900 (52.9%)
+   Bullish: 1,690 (47.1%)
+
+🎯 ACCURACY ANALYSIS:
+   Overall accuracy: 57.74%
+   Bullish signal accuracy: 58.28%
+   Bearish signal accuracy: 57.26%
+
+🏢 COMPANY-WISE PERFORMANCE:
+         Correct_Prediction  Signal_Strength  Signal_Count
+Company
+AAPL                  0.584            0.144           718
+AMZN                  0.611            0.143           718
+GOOGL                 0.560            0.146           718
+MSFT                  0.571            0.143           718
+TSLA                  0.561            0.143           718
+
+💪 SIGNAL STRENGTH ANALYSIS:
+   Average signal strength: 0.144
+   Signal strength range: 0.000 to 0.495
+   Strong signals (>0.5): 0 (0.0%)
+   Medium signals (0.2-0.5): 995 (27.7%)
+   Weak signals (<0.2): 2,595 (72.3%)
+   Weak signal accuracy: 55.65%
+
+⚠️ WARNING ANALYSIS:
+   Opposite predictions: 1,517 (42.3%)
+   Correct predictions: 2,073
+
+   Company-wise opposite predictions:
+     GOOGL: 316 (44.0%)
+     TSLA: 315 (43.9%)
+     MSFT: 308 (42.9%)
+     AAPL: 299 (41.6%)
+     AMZN: 279 (38.9%)
+
+📅 TIME-BASED ANALYSIS:
+   Yearly performance:
+     2022: 57.05% (1,765 signals)
+     2023: 58.41% (1,825 signals)
+
+   Best performing months:
+     2023-08: 63.23%
+     2023-03: 61.94%
+     2023-04: 61.33%
+
+   Worst performing months:
+     2023-06: 52.67%
+     2022-05: 51.61%
+     2022-02: 51.43%
+
+📋 EXECUTIVE SUMMARY:
+   • Generated 3,590 trading signals over 717 days
+   • Achieved 57.7% overall accuracy on 5-day predictions
+   • Balanced bullish (58.3%) vs bearish (57.3%) performance
+   • 1,517 opposite predictions need attention (42.3%)
+   • Average signal strength: 0.14
+   • Model shows consistent performance across all 5 companies
+
+============================================================
+Analysis Complete!
+============================================================
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src>
+
+
+
+
+cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src"; python improve_strategy.py
+📊 Loading original signals for comparison...
+🔍 ORIGINAL STRATEGY PERFORMANCE:
+   Overall Accuracy: 57.74%
+   Opposite Predictions: 42.3%
+   Total Signals: 3,590
+
+🚀 APPLYING IMMEDIATE IMPROVEMENTS...
+1. Applying confidence-based filtering...
+   High-confidence signals (>0.3): 235 (6.5%)
+   Improved accuracy: 65.96%
+   Reduced opposite rate: 34.0%
+
+2. Company-specific performance analysis...
+   Company performance:
+     AAPL: 58.4% accuracy, 0.144 avg strength
+     AMZN: 61.1% accuracy, 0.143 avg strength
+     GOOGL: 56.0% accuracy, 0.146 avg strength
+     MSFT: 57.1% accuracy, 0.143 avg strength
+     TSLA: 56.1% accuracy, 0.143 avg strength
+
+3. Time-based pattern analysis...
+   Best performing months:
+     Month 8: 61.6%
+     Month 7: 61.0%
+     Month 10: 59.4%
+   Worst performing months:
+     Month 5: 54.2%
+     Month 9: 54.7%
+     Month 2: 56.1%
+
+4. Signal strength vs accuracy correlation...
+   Accuracy by signal strength:
+     Very Low: 52.0% (1347 signals)
+     Low: 59.7% (1234 signals)
+     Medium: 62.2% (759 signals)
+     High: 64.5% (211 signals)
+     Very High: 71.8% (39 signals)
+
+💡 IMMEDIATE IMPROVEMENT RECOMMENDATIONS:
+   1. Filter signals with strength > 0.2: Potential accuracy improvement to ~60%
+   2. Focus on best-performing companies: AMZN
+   3. Avoid trading in worst months: [5, 9, 2]
+   4. Implement dynamic thresholds based on market volatility
+   5. Use ensemble of multiple models
+
+🎯 SIMULATED IMPROVED STRATEGY:
+   Filtered signals: 678 (18.9% of original)
+   Simulated accuracy: 63.57%
+   Simulated opposite rate: 36.4%
+   Accuracy improvement: +5.8%
+   Opposite prediction reduction: +5.8%
+   Improved signals saved to: output/improved_signals_filtered.csv
+
+🔧 FEATURE ENGINEERING SUGGESTIONS:
+   1. Add RSI (14, 21, 30 periods)
+   2. Add MACD and MACD histogram
+   3. Add Bollinger Bands position
+   4. Add volume indicators (OBV, volume ratio)
+   5. Add volatility measures (ATR, rolling std)
+   6. Add market regime indicators
+   7. Add lagged price features
+
+🤖 MODEL ARCHITECTURE IMPROVEMENTS:
+   1. Increase LSTM units: 128 → 256 → 512
+   2. Add attention mechanism
+   3. Use bidirectional LSTM
+   4. Add batch normalization
+   5. Implement ensemble of models
+   6. Use advanced optimizers (AdamW, RMSprop)
+
+✅ Analysis complete! Next steps:
+   1. Implement enhanced features in the notebook
+   2. Train the enhanced model
+   3. Compare results with original strategy
+   4. Fine-tune confidence thresholds
+   5. Deploy improved strategy for live trading
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src> cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src" && python comprehensive_analysis.py
+At line:1 char:51
++ cd "c:\Users\98765\OneDrive\Desktop\Timesnow\src" && python comprehen ...
++                                                   ~~
+The token '&&' is not a valid statement separator in this version.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException       
+    + FullyQualifiedErrorId : InvalidEndOfLine
+
+PS C:\Users\98765\OneDrive\Desktop\Timesnow\src>
