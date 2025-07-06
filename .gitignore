@@ -59,3 +59,37 @@ output/*.jpg
 # Data files (keep structure)
 data/raw/*.csv
 data/processed/*.csv
+
+# Large files and models
+*.h5
+*.keras
+*.pkl
+*.joblib
+*.model
+*.weights
+*.ckpt
+*.pb
+
+# Large datasets
+data/processed_data/
+data/raw/
+*.csv
+!data/sample_*.csv
+!data/example_*.csv
+
+# Model outputs
+output/
+models/
+checkpoints/
+logs/
+plots/
+figures/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Large analysis files
+*_analysis_*.txt
+*_results_*.csv
+*_signals_*.csv
+*_summary_*.csv
