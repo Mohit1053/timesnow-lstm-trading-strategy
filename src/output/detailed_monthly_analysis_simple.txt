@@ -1,0 +1,40 @@
+=== DETAILED MONTHLY ANALYSIS: COMPREHENSIVE STRATEGY ===
+Trained for 4 years
+Tested for 1 year
+
+Total Signals: 678
+Overall Accuracy: 63.57%
+
+=== MONTHLY BREAKDOWN ===
+Month | Total | Correct | Accuracy | Bullish | Bearish | Bull_Acc | Bear_Acc | Market_Tendency
+-----------------------------------------------------------------------------------------------
+    1 |    66 |      44 |    66.7% |      30 |      36 |    66.7% |    66.7% |    48.5%
+    2 |    50 |      38 |    76.0% |      18 |      32 |    77.8% |    75.0% |    44.0%
+    3 |    48 |      29 |    60.4% |      26 |      22 |    65.4% |    54.5% |    56.2%
+    4 |    75 |      49 |    65.3% |      24 |      51 |    58.3% |    68.6% |    40.0%
+    6 |    71 |      45 |    63.4% |      41 |      30 |    65.9% |    60.0% |    54.9%
+    7 |    90 |      53 |    58.9% |      52 |      38 |    59.6% |    57.9% |    52.2%
+    8 |    56 |      34 |    60.7% |      23 |      33 |    56.5% |    63.6% |    44.6%
+   10 |    80 |      55 |    68.8% |      25 |      55 |    68.0% |    69.1% |    42.5%
+   11 |    72 |      43 |    59.7% |      18 |      54 |    72.2% |    55.6% |    51.4%
+   12 |    70 |      41 |    58.6% |      13 |      57 |    53.8% |    59.6% |    42.9%
+
+=== HOLDING PERIOD ANALYSIS ===
+Average Holding Period: 4.2 days
+Median Holding Period: 3.0 days
+
+=== RETURN ANALYSIS ===
+Total Theoretical Return: 124.8659
+Average Return per Signal: 0.1842
+
+=== MONTHLY RETURNS ===
+Month 1: 20.4024
+Month 2: 15.9649
+Month 3: 4.4463
+Month 4: 24.5046
+Month 6: 8.3257
+Month 7: 16.0722
+Month 8: 2.4940
+Month 10: 18.3806
+Month 11: 8.8777
+Month 12: 5.3974

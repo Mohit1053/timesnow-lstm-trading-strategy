@@ -50,6 +50,25 @@ verify_*.py
 *_demo.py
 *_check.py
 
+# Large files and models
+*.h5
+*.keras
+*.pkl
+*.joblib
+*.model
+data/processed_data/enhanced_priceData5Year.csv
+src/output/advanced_model_*.h5
+src/output/optimized_model_*.keras
+src/output/ultra_advanced_model_*.keras
+**/*_model_*.h5
+**/*_model_*.keras
+
+# Output files that are too large
+data/processed_data/enhanced_*.csv
+output/models/
+models/
+*.hdf5
+
 # Output files (keep structure but ignore content)
 output/*.csv
 output/*.txt
@@ -59,37 +78,3 @@ output/*.jpg
 # Data files (keep structure)
 data/raw/*.csv
 data/processed/*.csv
-
-# Large files and models
-*.h5
-*.keras
-*.pkl
-*.joblib
-*.model
-*.weights
-*.ckpt
-*.pb
-
-# Large datasets
-data/processed_data/
-data/raw/
-*.csv
-!data/sample_*.csv
-!data/example_*.csv
-
-# Model outputs
-output/
-models/
-checkpoints/
-logs/
-plots/
-figures/
-
-# Jupyter notebook checkpoints
-.ipynb_checkpoints/
-
-# Large analysis files
-*_analysis_*.txt
-*_results_*.csv
-*_signals_*.csv
-*_summary_*.csv
